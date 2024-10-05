@@ -1,0 +1,75 @@
+:root {
+  --primarycolor: #dcdcdc;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #333;
+  display: flex;
+  flex-direction: row;
+}
+
+body, h1, h2, h3, p, button {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+div#leftbar {
+  width: 20%;
+  background-color: #4a4a4a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#account-section, #dates-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+#account-section p, #dates-section p {
+  text-align: center;
+  color: var(--primarycolor);
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: rgb(76, 76, 76);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1.journal-title {
+  margin: 0;
+  margin-block-end: 1.5rem;
+  font-size: 2rem;
+  color: var(--primarycolor);
+}
+
+.write-area {
+  width: 100%;
+  height: 95%;
+  flex-grow: 1;
+  background-color: #3c3c3c;
+  color: var(--primarycolor);
+  box-sizing: border-box;
+  border: 1px solid #828282;
+  border-radius: 5px;
+  padding: 1rem;
+  outline: none;
+}
+
+.texteditor {
+  min-width: 100%;
+  outline: none;
+}
