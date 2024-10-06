@@ -19,33 +19,48 @@ h2 {
 }
 
 form input {
-  width: 17rem;
-  height: 2rem;
-  margin-top: 0.5rem;
+    width: 17rem;
+    height: 2rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 p:has(input#submit) {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2%;
 }
 
 input#submit {
-  margin: 0;
-  width: 5rem;
-  color: #202020;
+    margin: 0;
+    width: 5rem;
+    color: #202020;
+    border: white;
 }
 
 #submit {
-  margin-top: 2rem;
-  width: 30%;
-  margin-inline-start: auto;
+    display: flex;
+    margin-top: 2rem;
+    width: 30%;
+    margin-inline-start: auto;
+    border-radius: 20%;
+    align-self: flex-end;
+}
+
+.form-bottom-button {
+display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20%;
 }
 
 .form-bottom-button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-radius: 20%;
 }
 
 .register-link, .login-link {
@@ -54,11 +69,12 @@ input#submit {
   background-color: #efefef;
   color: #202020;
   border: 1px solid #797979;
-  border-radius: 2px;
+  border-radius: 20%;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 
 .register-link, .login-link, #submit {
@@ -70,6 +86,7 @@ div.flashes {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 75%;
 }
 
 div.flashes div {
@@ -80,4 +97,24 @@ div.flashes-placeholder {
   height: 5rem;
   width: 100%;
   visibility: hidden;
+}
+
+.logintitle {
+    display: flex;
+    align-self: left;
+    font-size: xx-large;
+    margin-block-start: 0.3em;
+    margin-block-end: 0.3em;
+}
+
+.loginpanel {
+    background-color: #735427;
+    border-radius: 10%;
+}
+
+
+
+.registertitle {
+      font-weight: normal;
+  letter-spacing: 1px;
 }

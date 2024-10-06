@@ -1,0 +1,77 @@
+.profile-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--primarycolor);
+  margin-bottom: 3rem;
+}
+
+.profile-image img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profile_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#affirmation-form {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 2rem;
+}
+
+.affirmation-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.affirmation-input input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--primarycolor);
+  border-radius: 4px;
+  color: var(--primarycolor);
+  outline: none;
+}
+
+#add-affirmation, #affirmation-form button[type="submit"], .logout-button button {
+  background-color: #A6935B;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.logout-button button {
+  background-color: #4E3914;
+  color: white;
+  height: 2.5rem;
+}
+
+#add-affirmation:hover, #affirmation-form button[type="submit"]:hover, .logout-button button:hover {
+  background-color: #8C785E;
+}
+
+.logout-button {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

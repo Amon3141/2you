@@ -13,8 +13,8 @@
 <div class="reminders">
   <h1 class="reminders-text">Reminders from past <i>you</i>:</h1>
   <div class="reminder-dates">
-    {% if journals %}
-    {% for journal in journals %}
+    {% if available_journals %}
+    {% for journal in available_journals %}
     <div class="reminder-date">
       <a href="{{ url_for('view_journal', journal_id=journal.id) }}">From: {{ journal.date }}</a>
     </div>
@@ -29,7 +29,7 @@
       </p>
     </div>
     <div class="middle">
-      <p>empty text</p>
+      <img src="{{ url_for('static', filename='images/character_icon.png') }}" alt="character" id="character" class="character_icon">
     </div>
     <div class="right">
       <p id="af2">

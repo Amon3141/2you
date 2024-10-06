@@ -7,38 +7,41 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username() }}<br>
-            {% for error in form.username.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <div class="form-bottom-button">
-            <a href="{{ url_for('register') }}" class="register-link">Signup</a>
-            <p>{{ form.submit() }}</p>
-        </div>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flashes">
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
+    <div class="loginpanel">
+    <h2 class="logintitle">Login</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username() }}<br>
+                {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+                {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <div class="form-bottom-button">
+                <a href="{{ url_for('register') }}" class="register-link">Signup</a>
+                <p>{{ form.submit() }}</p>
             </div>
-        {% else %}
-            <div class="flashes-placeholder"></div>
-        {% endif %}
-     {% endwith %}
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flashes">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="flashes-placeholder"></div>
+            {% endif %}
+        {% endwith %}
+
+    </div>
 </body>
 </html>
