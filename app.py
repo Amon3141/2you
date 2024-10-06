@@ -1,11 +1,13 @@
+from sqlite3 import IntegrityError
 from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from forms import RegistrationForm, LoginForm 
 from models import User, Journal 
 from extensions import db
 from datetime import datetime
 import uuid
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -55,7 +57,7 @@ def register():
         new_user = User(
             username=username,
             email=email,
-            password_hash=generate_password_hash(form.password.data)
+            password=generate_password_hash(form.password.data)
         )
 
         try:
@@ -80,10 +82,9 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username()).first()
+        user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
             flash('Login unsuccessful. Please check your email and password', 'danger')

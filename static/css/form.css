@@ -1,3 +1,7 @@
+:root {
+  --primarycolor: #dcdcdc;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -59,4 +63,21 @@ input#submit {
 
 .register-link, .login-link, #submit {
   font-size: 0.8rem;
+}
+
+div.flashes {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.flashes div {
+  color: var(--primarycolor);
+}
+
+div.flashes-placeholder {
+  height: 5rem;
+  width: 100%;
+  visibility: hidden;
 }
