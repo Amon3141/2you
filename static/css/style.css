@@ -8,6 +8,11 @@ html, body {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: var(--primarycolor);
+}
+
 body {
   background-color: #8C785E;
   display: flex;
@@ -63,12 +68,14 @@ body, h1, h2, h3, p, button {
             cursor: pointer; /* Pointer cursor on hover */
             border-radius: 12px;
             width: 120%;
-            font-size: 1rem;
+            font-size: 1.2rem;
             background-color: #A6935B;
             text-align: center;
             justify-content: center;
             margin-left: -1rem;
             height: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         .new_entry .leftbar_icon {

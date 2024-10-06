@@ -12,10 +12,10 @@
             <span class="sidebar-text">Profile</span> 
         </div>
 
-        <div class="sidebar-button" id="Dashboard">
+        <a href="{{ url_for('dashboard') }}"><div class="sidebar-button" id="Dashboard">
             <img src="./static/images/dashboard_icon.png" alt="dashboard" id="dashboard" class="leftbar_icon">
             <span class="sidebar-text">Dashboard</span>
-        </div>
+        </div></a>
 
         <div class="entries-title" id="EntriesTitle">
             <span class="sidebar-text">Entries</span> 
@@ -23,7 +23,7 @@
 
         <div class="entry-list">
             <div class="new-entry" id="+Entry">
-                <span class="sidebar-text">New Entry</span> 
+                <a href="{{ url_for('home') }}"><span class="sidebar-text">New Entry</span></a>
             </div>
     
             {% if journals %}
