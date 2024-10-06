@@ -23,7 +23,7 @@ login_manager.login_view = 'login'
 def home():
     if current_user.is_authenticated:
         return render_template('main.html')
-    return redirect(url_for('login')) 
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -55,7 +55,7 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username()).first()
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('Login successful!', 'success')
@@ -104,11 +104,11 @@ def new_journal():
         return redirect(url_for('view_journals'))
     return render_template('new_journal.html')
 
-with app.app_context():
-    db.create_all()
-
 @app.route('/abc')
 @login_required
 def show_journal():
     journals = current_user.journals
     return render_template('journals.html', journals=journals)
+
+with app.app_context():
+    db.create_all()
