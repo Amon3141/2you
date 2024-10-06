@@ -22,6 +22,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 @app.route('/new-entry')
+@login_required
 def home():
     if current_user.is_authenticated:
         journals = current_user.journals
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     app.run(debug=True)
     
 @app.route('/')
+@login_required
 def dashboard():
     affirmations = current_user.affirmations
     affirmation1 = random.choice(affirmations)
