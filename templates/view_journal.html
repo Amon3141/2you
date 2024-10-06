@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}{{ journal.date }}{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view_journal.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="header">
   <h1 class="journal-title">{{ journal.date }}</h1>
-  <a href="{{ url_for('logout') }}" class="logout-link"><button>Logout</button></a>
 </div>
-<div class="write-area">
+<label for="reflection-area" class="entrytypetitle">Today's Reflection</label>
+<div class="write-area-reflection" id="reflection-area" name="reflection-area">
   {{ journal.content }}
 </div>
-<div class="write-area">
+<label for="action-area" class="entrytypetitle">What Will I Improve On</label>
+<div class="write-area-action" id="action-area" name="action-area">
   {{ journal.future }}
 </div>
 {% endblock %}
