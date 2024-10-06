@@ -3,6 +3,9 @@ from flask_login import LoginManager, UserMixin, login_user, current_user, logou
 from forms import RegistrationForm, LoginForm 
 from models import User, Journal 
 from extensions import db
+from datetime import datetime
+import uuid
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -10,6 +13,8 @@ app.config['SECRET_KEY'] = 'secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
 db.init_app(app)
+
+migrate = Migrate(app, db)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -67,5 +72,43 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
+
+
+@app.route('/journals')
+@login_required
+def view_journals():
+    #get journals for that user
+    journals = Journal.query.filter_by(account_id=current_user.id).all()
+    return render_template('main.html', journals=journals)
+
+@app.route('/journals/new', methods=['GET', 'POST'])
+@login_required
+def new_journal():
+    if request.method == 'POST':
+        id = str(uuid.uuid4().hex)
+        now = datetime.utcnow()
+        content = str(request.form['content'])
+        future = str(request.form['future'])
+
+        new_journal = Journal(id=id, 
+        date=now, 
+        content=content, 
+        future=future, 
+        comment="", 
+        account_id=current_user.id)
+
+        # print(type(id), type(date), type(content), type(future), type(current_user.id))
+        
+        db.session.add(new_journal)
+        db.session.commit()
+        return redirect(url_for('view_journals'))
+    return render_template('new_journal.html')
+
 with app.app_context():
     db.create_all()
+
+@app.route('/abc')
+@login_required
+def show_journal():
+    journals = current_user.journals
+    return render_template('journals.html', journals=journals)
