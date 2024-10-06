@@ -7,41 +7,55 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
 </head>
 <body>
-    <div class="loginpanel">
-    <h2 class="logintitle">Login</h2>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.username.label }}<br>
-                {{ form.username() }}<br>
-                {% for error in form.username.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.password.label }}<br>
-                {{ form.password(size=32) }}<br>
-                {% for error in form.password.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <div class="form-bottom-button">
-                <a href="{{ url_for('register') }}" class="register-link">Signup</a>
-                <p>{{ form.submit() }}</p>
+    <div class="form-container">
+        <div class="leftside">
+            <img src="{{ url_for('static', filename='images/logo_simpleoutline.png') }}" alt="logo" id="logo" class="logo_icon">
+            <div class="lefttext">
+                <h2>Journaling, redefined.</h2>
+                <h2>From you, to you.</h2>
             </div>
-        </form>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flashes">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="flashes-placeholder"></div>
-            {% endif %}
-        {% endwith %}
+        </div>
 
+        <div class="formside">
+            <div class="formpanel">
+                <h2 class="formtitle">Login</h2>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ form.username.label }}<br>
+                        {{ form.username() }}<br>
+                        {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.password.label }}<br>
+                        {{ form.password(size=32) }}<br>
+                        {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <div class="form-bottom-button">
+                        <input id="submit" name="submit" type="submit" value="Sign in">
+                    </div>
+                    <div class="form-bottom-second">
+                        <p class="form-bottom-question">Fresh Start?</p>
+                        <a href="{{ url_for('register') }}" class="register-link">Create Account</a>
+                    </div>
+                </form>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flashes">
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="flashes-placeholder"></div>
+                {% endif %}
+            {% endwith %}
+        </div>
     </div>
 </body>
 </html>
