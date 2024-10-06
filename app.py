@@ -39,14 +39,39 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You can now log in.', 'success')
-        return redirect(url_for('login'))
-    
-    return render_template('register.html', form=form)
+        username = form.username.data.lower()
+        email = form.email.data.lower()
+
+        # Check if username or email already exists
+        if User.query.filter_by(username=username).first():
+            flash('Username already exists. Please choose a different one.', 'danger')
+            return render_template('register.html', form=form)
+        
+        if User.query.filter_by(email=email).first():
+            flash('Email already registered. Please use a different email or log in.', 'danger')
+            return render_template('register.html', form=form)
+
+        # Create new user
+        new_user = User(
+            username=username,
+            email=email,
+            password_hash=generate_password_hash(form.password.data)
+        )
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Your account has been created successfully! You can now log in.', 'success')
+            return redirect(url_for('login'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('An error occurred. Please try again.', 'danger')
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f'Error during registration: {str(e)}')
+            flash('An unexpected error occurred. Please try again later.', 'danger')
+
+    return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

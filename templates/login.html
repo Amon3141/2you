@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
 </head>
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+       <div class="flashes">
+         {% for category, message in messages %}
+           <div class="alert alert-{{ category }}">{{ message }}</div>
+         {% endfor %}
+       </div>
+     {% endif %}
+     {% endwith %}
     <h2>Login</h2>
     <form method="POST">
         {{ form.hidden_tag() }}
