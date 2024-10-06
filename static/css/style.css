@@ -6,8 +6,8 @@ main {
   padding: 2rem;
 }
 
-p, h1, h2, h3, button, div {
-  font-family: inter
+p, h1, h2, h3, button, div, a, input {
+  font-family: 'Inter', sans-serif;
 }
 
 html, body {

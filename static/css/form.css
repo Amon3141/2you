@@ -69,6 +69,21 @@ input#submit {
   border-radius: 20%;
 }
 
+.register-bottom-button a {
+  width: 6rem;
+}
+
+.register-bottom-button #submit {
+  width: 5rem;
+}
+
+.register-bottom-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20%;
+}
+
 p.form-bottom-question {
   font-size: 1rem;
   margin: 0;
