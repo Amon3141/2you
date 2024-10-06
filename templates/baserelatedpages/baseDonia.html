@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+    <div id="leftbar">
+
+        <div class="sidebar-button" id="Profile">
+            <i class="fas fa-cog icon"></i> <!-- Settings icon -->
+            <span class="sidebar-text">Profile</span> 
+        </div>
+
+        <div class="sidebar-button" id="Dashboard">
+            <i class="fas fa-user icon"></i> <!-- Account icon -->
+            <span class="sidebar-text">Dashboard</span>
+        </div>
+
+        <div class="entries-title" id="EntriesTitle">
+            <span class="sidebar-text">Entries</span> 
+        </div>
+
+        <div class="new-entry" id="+ Entry">
+            <i class="fas fa-cog icon"></i> <!-- Settings icon -->
+            <span class="sidebar-text">+ Entry</span> 
+        </div>
+
+        <div class="entry-button" id="Entry">
+            <span class="sidebar-text">09-15-2024</span> 
+        </div>
+
+        <div class="logofield">
+            <img class="logo" src="static/images/SimpleOutline.png">
+        </div>
+
+    </div>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>

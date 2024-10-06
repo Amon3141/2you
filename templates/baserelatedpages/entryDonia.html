@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1 class="journal-title" id="date-header"></h1>
+
+<script>
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date().toLocaleDateString('en-US', options);
+    document.getElementById('date-header').innerText = date;
+</script>
+
+<div class="write-area-reflection">
+    <div class="entrytypetitle" contenteditable="false">Today's Reflection</div>
+    <textarea class="texteditor" placeholder="Write your thoughts here..."></textarea>
+</div>
+
+<div class="write-area-action">
+    <div class="entrytypetitle" contenteditable="false">What will I improve on?</div>
+    <textarea class="texteditor" placeholder="Write your actions here..."></textarea>
+    </div>
+{% endblock %}
