@@ -16,7 +16,9 @@ login_manager.login_view = 'login'
 
 @app.route('/')
 def home():
-    return render_template("main.html")
+    if current_user.is_authenticated:
+        return render_template('main.html')
+    return redirect(url_for('login')) 
 
 if __name__ == '__main__':
     app.run(debug=True)
