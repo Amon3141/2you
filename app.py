@@ -141,6 +141,7 @@ def show_journal():
     journals = current_user.journals
     return render_template('journals.html', journals=journals)
 
+<<<<<<< HEAD
 # @app.route('/profile')
 # @login_required
 # def edit_profile(methods=['POST']):
@@ -186,6 +187,8 @@ def show_affirmations():
     affirmation3 = random.choice(affirmations)
     return render_template('landing.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
+=======
+>>>>>>> 3200028 (created a view_journal page (skelton))
 @app.route('/journal/<string:journal_id>')
 @login_required
 def view_journal(journal_id):
