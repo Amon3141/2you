@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Journal{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+  <h1 class="journal-title">{{ journal.date }}</h1>
+  <a href="{{ url_for('logout') }}" class="logout-link"><button>Logout</button></a>
+</div>
+<div class="write-area">
+  {{ journal.content }}
+</div>
+<div class="write-area">
+  {{ journal.future }}
+</div>
+{% endblock %}

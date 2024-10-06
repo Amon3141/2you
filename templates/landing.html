@@ -10,9 +10,21 @@
 {% endblock %}
 
 {% block content %}
-<div class="dashboard-container">
-  <div class="reminders">
+<div class="reminders">
+  <h1 class="reminders-text">Reminders from past you:</h1>
+  <div class="reminder-dates">
     {% if journals %}
+    {% for journal in journals %}
+    <div class="reminder-date">
+      From: <a href="{{ url_for('view_journal', journal_id=journal.id) }}">{{ journal.date }}</a>
+    </div>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+<div class="bestself">
+  <div>Best Self Here</div>
+  <img src="./static/images/ikemen.png" alt="Best Self" id="best-me-image">
       {% for journal in journals %}
       <div class="reminder-date">
         {{ journal.date }}

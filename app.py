@@ -186,5 +186,11 @@ def show_affirmations():
     affirmation3 = random.choice(affirmations)
     return render_template('landing.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
+@app.route('/journal/<string:journal_id>')
+@login_required
+def view_journal(journal_id):
+    journal = Journal.query.get_or_404(journal_id)
+    return render_template('view_journal.html', journal=journal)
+
 with app.app_context():
     db.create_all()
