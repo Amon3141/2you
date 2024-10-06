@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
+from forms import RegistrationForm, LoginForm  
 
 app = Flask(__name__)
 
@@ -9,11 +11,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
 db = SQLAlchemy(app)
 
-login_manager = LoginManager()
-
-login_manager.init_app(app)
+login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-login_manager.login_message_category = 'please login'
 
 @app.route('/')
 def home():
@@ -37,75 +36,56 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        # Get formdata
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
 
-        # Validate form data
-        if password != confirm_password:
-            flash('Passwords do not match!', 'danger')
-            return redirect(url_for('register'))
-
-        # Check if user exists
-        existing_user = User.query.filter((User.username == username) | (User.email == email)).first()
-        if existing_user:
-            flash('Username or email already exists.', 'danger')
-            return redirect(url_for('register'))
-
-        # Create new user
-        new_user = User(username=username, email=email)
-        new_user.set_password(password)
-        db.session.add(new_user)
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
         db.session.commit()
-
-        flash('Registration successful! You can now log in.', 'success')
+        flash('Your account has been created! You can now log in.', 'success')
         return redirect(url_for('login'))
-
-    return render_template('register.html')
+    
+    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))  # Redirect if already logged in
+        return redirect(url_for('home'))
 
-    if request.method == 'POST':
-        username_or_email = request.form.get('username_or_email')
-        password = request.form.get('password')
-
-        # Find user by username or email
-        user = User.query.filter(
-            (User.username == username_or_email) | (User.email == username_or_email)
-        ).first()
-
-        if user and user.check_password(password):
-            login_user(user)  # Log the user in
-            flash('Logged in successfully.', 'success')
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            flash('Login successful!', 'success')
+            return redirect(url_for('home'))
         else:
-            flash('Invalid username/email or password.', 'danger')
-
-    return render_template('login.html')
+            flash('Login unsuccessful. Please check your email and password', 'danger')
+    
+    return render_template('login.html', form=form)
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.', 'info')
+    flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
-@app.route('/list_users')
-def list_users():
-    users = User.query.all()
-    return str(users)
+with app.app_context():
+    db.create_all()

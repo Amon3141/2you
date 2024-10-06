@@ -2,21 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <title>Register</title>
 </head>
 <body>
-    <form>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username"><br>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email"><br>
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password"><br>
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="text" id="confirm_password" name="confirm_password"><br>
-        <input type="submit" value="Submit">
+    <h2>Register</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}<br>
+            {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=32) }}<br>
+            {% for error in form.confirm_password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
     </form>
 </body>
 </html>
