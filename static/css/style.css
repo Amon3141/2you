@@ -222,5 +222,67 @@ main {
             font-weight:bold;
         }
 
+        .date-container {
+          display: flex;
+          width: 300px;
+          height: 50px;
+          float: right;
+          background-color: #F9B128;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
+          border: none;
+        }
+
+        .calendar_icon {
+          object-fit: contain;
+        }
+
+        .startDate {
+          background-color: transparent;
+          font-weight: bold;
+          font-size: 18px; 
+          border: none;
+          text-align: center;
+          color: white;
+        }
+
+        .startDate::placeholder{
+          color: white;
+          text-align: center;
+        }
+
+        .startDate:focus {
+          border: none;
+        }
+
+        .startDate:focus::placeholder {
+          color: transparent;
+        }
+
+        .save-container {
+          display: flex;
+          border-radius: 12px;
+          border: none;
+          background-color: #F9B128;
+          float: right;
+          font-weight: bold;
+          font-size: 20px; 
+          align-items: center;
+          width: 150px;
+          height: 50px;
+          justify-content: space-evenly;
+          cursor:pointer;
+        }
+
+        .submit-button {
+          border: none;
+          color: white;
+          background-color: transparent;
+          font-weight: bold;
+          font-size: 20px;
+          align-items: center;
+        }
+
 
 

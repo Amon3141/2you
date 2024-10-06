@@ -18,16 +18,25 @@
     document.getElementById('date-header').innerText = date;
 </script>
 
-<form method="POST" id="journal-form">
+<form method="POST" id="journal-form" class="journal-form">
+
+    
 
     <label for="reflection-area" class="entrytypetitle">Today's Reflection</label>
+    <div class="date-container">
+        <img src="{{ url_for('static', filename='images/calendar_icon.png') }}" alt="calendar" id="calendar" class="submit_icon">
+        <input type="number" id="startDate" name="startDate" class="startDate" placeholder="Set a reminder here">
+    </div>
     <textarea placeholder= "Write your thoughts here..." id="content" name="content" class="texteditor"></textarea>
 
     <label for="action-area" class="entrytypetitle">What will I improve on?</label>
     <textarea placeholder= "Write your actions here..." id="future" name="future" class="texteditor"></textarea>
-    <input type="submit" value="Save" class="submit-button">
-
-    <input type="number" id="startDate" name="startDate">
+    
+    <button type="submit" class="save-container">
+        <img src="{{ url_for('static', filename='images/folder_icon.png') }}" alt="folder" id="folder" class="submit_icon">
+        <p  class="submit-button">Save</p>
+    </button>
+    
 </form>
 
 <script>
