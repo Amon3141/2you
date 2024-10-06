@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Journal{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <div id="leftbar">
@@ -12,7 +13,16 @@
       <p>Account</p>
     </div>
     <div id="dates-section">
-      <p>Dates</p>
+      <h1>Journal Dates</h1>
+      {% if journals %}
+        <ul id="journal-dates">
+          {% for journal in journals %}
+            <li>{{ journal.date }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No journals found</p>
+      {% endif %}
     </div>
   </div>
 
@@ -22,7 +32,36 @@
       <a href="{{ url_for('logout') }}" class="logout-link"><button>Logout</button></a>
     </div>
     <div class="write-area">
-      <div class="texteditor" contenteditable="true">hi</div>
+      <form id="journal-form">
+        <label for="content">Content Goes Here</label> <br>
+        <input type="text" id="content" name="content"> <br>
+        <label for="future">Future Goals Go Here</label> <br>
+        <input type="text" id="future" name="future"> <br>
+        <input type="submit" value="Save">
+      </form>
+
+      <script>
+        $(document).ready(function() {
+            $('#journal-form').on('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Serialize form data
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/journals/new',  // URL to send the request to
+                    type: 'POST',              // HTTP method
+                    data: formData,            // Data to send
+                    success: function(response) {
+                        $('#journal-form')[0].reset();
+                    },
+                    error: function(error) {
+                        alert('Error: ' + error.responseText);  // Handle error response
+                    }
+                });
+            });
+        });
+      </script>
     </div>
   </main>
 </body>

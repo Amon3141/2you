@@ -1,5 +1,5 @@
 from sqlite3 import IntegrityError
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from forms import RegistrationForm, LoginForm 
 from models import User, Journal 
@@ -24,7 +24,8 @@ login_manager.login_view = 'login'
 @app.route('/')
 def home():
     if current_user.is_authenticated:
-        return render_template('main.html')
+        journals = current_user.journals
+        return render_template('main.html', journals=journals)
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
@@ -98,17 +99,8 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
-
-
-@app.route('/journals')
-@login_required
-def view_journals():
-    #get journals for that user
-    journals = Journal.query.filter_by(account_id=current_user.id).all()
-    return render_template('main.html', journals=journals)
-
-@app.route('/journals/new', methods=['GET', 'POST'])
-@login_required
+@app.route('/journals/new', methods=['POST'])
+# @login_required
 def new_journal():
     if request.method == 'POST':
         id = str(uuid.uuid4().hex)
@@ -123,12 +115,14 @@ def new_journal():
         comment="", 
         account_id=current_user.id)
 
-        # print(type(id), type(date), type(content), type(future), type(current_user.id))
+        print("created")
         
         db.session.add(new_journal)
         db.session.commit()
-        return redirect(url_for('view_journals'))
-    return render_template('new_journal.html')
+        print("saved")
+        # return redirect(url_for('view_journals'))
+    # return render_template('main.html')
+    return jsonify({"message": "form submitted successfully"})
 
 @app.route('/abc')
 @login_required
