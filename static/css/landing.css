@@ -2,11 +2,17 @@ main {
   padding: 0;
 }
 
-.reminders-text {
+.reminders-text, .your-best-self-text {
   margin: 1.5rem;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 2rem;
-  color: #272727
+  color: #272727;
+  margin-right: auto;
+}
+
+.your-best-self-text {
+  color: #f0f0f0;
+  margin-bottom: auto;
 }
 
 .reminders {
@@ -35,19 +41,40 @@ main {
   background-color: #ffedc1;
   color: #212121;
   height: 4rem;
-  width: 9rem;
+  width: 20%;
   margin-inline: 1rem;
   font-size: 0.8rem;
-  border-radius: 5px;
+  border-radius: 8px;
+  color: #100A92;
+}
+
+.reminder-date a {
+  text-decoration: none;
+  color: #100A92;
 }
 
 .bestself {
   height: 100%;
   width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.right {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#af2, #af3 {
+  margin-block: 6rem;
+}
+
+#af1, #af2, #af3 {
+  color: #ebebeb;
+  font-size: 2rem;
 }
 
 #best-me-image {

@@ -7,15 +7,15 @@
 <body>
     <div id="leftbar">
 
-        <div class="sidebar-button" id="Profile">
+        <div class="sidebar-button" id="Profile"><a href="{{ url_for('dashboard') }}"><div class="sidebar-button-inner">
             <img src="./static/images/account_icon.png" alt="account" id="account" class="leftbar_icon">
             <span class="sidebar-text">Profile</span> 
-        </div>
+        </div></a></div>
 
-        <div class="sidebar-button" id="Dashboard">
+        <div class="sidebar-button" id="Dashboard"><a href="{{ url_for('dashboard') }}"><div class="sidebar-button-inner">
             <img src="./static/images/dashboard_icon.png" alt="dashboard" id="dashboard" class="leftbar_icon">
             <span class="sidebar-text">Dashboard</span>
-        </div>
+        </div></a></div>
 
         <div class="entries-title" id="EntriesTitle">
             <span class="sidebar-text">Entries</span> 
@@ -23,15 +23,15 @@
 
         <div class="entry-list">
             <div class="new-entry" id="+Entry">
-                <span class="sidebar-text">New Entry</span> 
+                <a href="{{ url_for('home') }}"><span class="sidebar-text">New Entry</span></a>
             </div>
     
             {% if journals %}
                 {% for journal in journals %}
-                    <div class="past-entry" id="Entry">
+                    <a href="{{ url_for('view_journal', journal_id=journal.id) }}"><div class="past-entry" id="Entry">
                         <img src="./static/images/entry_icon.png" alt="entry" id="entry" class="leftbar_icon">
                         <span class="sidebar-text">{{ journal.date }}</span>
-                    </div>
+                    </div></a>
                 {% endfor %}
             {% else %}
                 <p>No journals found</p>

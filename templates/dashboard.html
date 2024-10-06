@@ -11,12 +11,12 @@
 
 {% block content %}
 <div class="reminders">
-  <h1 class="reminders-text">Reminders from past you:</h1>
+  <h1 class="reminders-text">Reminders from past <i>you</i>:</h1>
   <div class="reminder-dates">
     {% if journals %}
     {% for journal in journals %}
     <div class="reminder-date">
-      From: <a href="{{ url_for('view_journal', journal_id=journal.id) }}">{{ journal.date }}</a>
+      From:  <a href="{{ url_for('view_journal', journal_id=journal.id) }}">{{ journal.date }}</a>
     </div>
     {% endfor %}
   {% endif %}
@@ -24,12 +24,12 @@
 </div>
   <div class="bestself">
     <div class="left">
-      <p>
+      <p id="af1">
         {{ affirmation1.text }}
       </p>
     </div>
     <div class="middle">
-      <p id="af1">empty text</p>
+      <p>empty text</p>
     </div>
     <div class="right">
       <p id="af2">

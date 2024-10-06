@@ -21,7 +21,8 @@ migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-@app.route('/')
+@app.route('/new-entry')
+@login_required
 def home():
     if current_user.is_authenticated:
         journals = current_user.journals
@@ -31,8 +32,13 @@ def home():
 if __name__ == '__main__':
     app.run(debug=True)
     
-@app.route('/dashboard')
+@app.route('/')
+@login_required
 def dashboard():
+    affirmations = current_user.affirmations
+    affirmation1 = random.choice(affirmations)
+    affirmation2 = random.choice(affirmations)
+    affirmation3 = random.choice(affirmations)
     journals = current_user.journals
     affirmations = current_user.affirmations
     affirmation1 = random.choice(affirmations)
@@ -74,7 +80,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash('Your account has been created successfully! You can now log in.', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('show_profile_creater'))
         except IntegrityError:
             db.session.rollback()
             flash('An error occurred. Please try again.', 'danger')
@@ -188,6 +194,7 @@ def show_affirmations():
     affirmation1 = random.choice(affirmations)
     affirmation2 = random.choice(affirmations)
     affirmation3 = random.choice(affirmations)
+    return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
     return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 @app.route('/journal/<string:journal_id>')
