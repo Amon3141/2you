@@ -1,13 +1,14 @@
 from sqlite3 import IntegrityError
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
-from forms import RegistrationForm, LoginForm 
+from forms import RegistrationForm, LoginForm, JournalForm
 from models import User, Journal, Affirmation
 from extensions import db
 from datetime import datetime, timedelta
 import uuid, random
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import FlaskForm
 
 app = Flask(__name__)
 
@@ -35,10 +36,6 @@ if __name__ == '__main__':
 @app.route('/')
 @login_required
 def dashboard():
-    affirmations = current_user.affirmations
-    affirmation1 = random.choice(affirmations)
-    affirmation2 = random.choice(affirmations)
-    affirmation3 = random.choice(affirmations)
     journals = current_user.journals
     affirmations = current_user.affirmations
     affirmation1 = random.choice(affirmations)
@@ -117,7 +114,8 @@ def logout():
 @app.route('/journals/new', methods=['GET', 'POST'])
 @login_required
 def new_journal():
-    if request.method == 'POST':
+
+    if request.method=='POST':
         id = str(uuid.uuid4().hex)
         today = datetime.today().date()
         content = str(request.form['content'])
@@ -138,12 +136,14 @@ def new_journal():
             endDate=endDate,
         )
 
-        # print(type(id), type(date), type(content), type(future), type(current_user.id))
+        print(startDate)
+        print(content)
+        print(future)
         
         db.session.add(new_journal)
         db.session.commit()
         return redirect(url_for('dashboard'))
-    return render_template('new_journal.html')
+    return render_template('entry.html')
 
 @app.route('/abc')
 @login_required
@@ -194,7 +194,6 @@ def show_affirmations():
     affirmation1 = random.choice(affirmations)
     affirmation2 = random.choice(affirmations)
     affirmation3 = random.choice(affirmations)
-    return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
     return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 @app.route('/journal/<string:journal_id>')

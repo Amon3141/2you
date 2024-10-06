@@ -6,6 +6,7 @@
 <title>Journal</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -17,13 +18,38 @@
     document.getElementById('date-header').innerText = date;
 </script>
 
-<div class="write-area-reflection">
-    <div class="entrytypetitle" contenteditable="false">Today's Reflection</div>
-    <textarea class="texteditor" placeholder="Write your thoughts here..."></textarea>
-</div>
+<form method="POST" id="journal-form">
 
-<div class="write-area-action">
-    <div class="entrytypetitle" contenteditable="false">What will I improve on?</div>
-    <textarea class="texteditor" placeholder="Write your actions here..."></textarea>
-    </div>
+    <label for="reflection-area" class="entrytypetitle">Today's Reflection</label>
+    <textarea placeholder= "Write your thoughts here..." id="content" name="content" class="texteditor"></textarea>
+
+    <label for="action-area" class="entrytypetitle">What will I improve on?</label>
+    <textarea placeholder= "Write your actions here..." id="future" name="future" class="texteditor"></textarea>
+    <input type="submit" value="Save" class="submit-button">
+
+    <input type="number" id="startDate" name="startDate">
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('#journal-form').on('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '/journals/new',  // URL to send the request to
+                type: 'POST',              // HTTP method
+                data: formData,            // Data to send
+                success: function(response) {
+                    $('#journal-form')[0].reset();
+                },
+                error: function(error) {
+                    alert('Error: ' + error.responseText);  // Handle error response
+                }
+            });
+        });
+    });
+  </script>
 {% endblock %}
