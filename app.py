@@ -201,7 +201,8 @@ def show_affirmations():
 @login_required
 def view_journal(journal_id):
     journal = Journal.query.get_or_404(journal_id)
-    return render_template('view_journal.html', journal=journal)
+    all_journals = Journal.query.filter_by(user_id=current_user.id).order_by(Journal.date.desc()).all()
+    return render_template('view_journal.html', journal=journal, journals=all_journals)
 
 with app.app_context():
     db.create_all()
