@@ -1,8 +1,8 @@
-.reminders-text, .your-best-self-text {
+.reminders-text {
   margin-block: 1.5rem;
   font-weight: bold;
   font-size: 2rem;
-  color: #272727;
+  color: #35250c;
   margin-right: auto;
 }
 
@@ -18,13 +18,15 @@
   justify-content: center;
   background-color: #f6b544;
   height: 25%;
-  width: calc(100% + 4rem);
+  width: calc(100% + 2rem);
+  width: 100%;
   margin-left: -2rem;
   margin-right: -2rem;
   margin-top: -2rem;
   padding-top: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
+  border-radius: 0 0 20px 20px;
 }
 
 .reminder-dates {

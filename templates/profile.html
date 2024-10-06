@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    let affirmationCount = 1;
+
+    $('#add-affirmation').click(function(e) {
+        e.preventDefault();
+        affirmationCount++;
+        let newInput = `<div class="affirmation-input">
+            <input type="text" name="affirmation${affirmationCount}" placeholder="Enter an affirmation">
+        </div>`;
+        $('#affirmation-container').append(newInput);
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>Your Profile</h1>
+    
+    <div class="profile-image">
+      <img src="{{ url_for('static', filename='images/character_icon.png') }}" alt="character" id="character" class="character_icon">
+    </div>
+
+    <form id="affirmation-form" action="{{ url_for('add_affirmations') }}" method="POST">
+        <h2>Your Affirmations</h2>
+        <div id="affirmation-container">
+            <div class="affirmation-input">
+                <input type="text" name="affirmation1" placeholder="Enter an affirmation">
+            </div>
+        </div>
+        <div class="profile_buttons">
+          <button type="button" id="add-affirmation">Add More</button>
+          <button type="submit">Save Affirmations</button>
+        </div>
+        <a href="{{ url_for('logout') }}" class="logout-button">
+          <button>Logout</button>
+        </a>
+    </form>
+</div>
+{% endblock %}

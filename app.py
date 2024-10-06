@@ -1,3 +1,4 @@
+from operator import and_
 from sqlite3 import IntegrityError
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
@@ -37,11 +38,21 @@ if __name__ == '__main__':
 @login_required
 def dashboard():
     all_journals = current_user.journals
+    today = datetime.today().date()
+    available_journals = db.session.query(Journal).filter(
+        and_(
+            Journal.account_id == current_user.id,
+            and_(
+                Journal.startDate <= today,
+                Journal.endDate >= today
+            )
+        )
+    ).all()
     affirmations = current_user.affirmations
     affirmation1 = random.choice(affirmations)
     affirmation2 = random.choice(affirmations)
     affirmation3 = random.choice(affirmations)
-    return render_template("dashboard.html", journals=all_journals, affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
+    return render_template("dashboard.html", journals=all_journals, available_journals=available_journals, affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -109,7 +120,7 @@ def login():
 def logout():
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.route('/journals/new', methods=['GET', 'POST'])
 @login_required
@@ -187,15 +198,38 @@ def add_affirmation():
 def show_profile_creater():
     return render_template('affirmation.html')
 
-@app.route('/profile')
+@app.route('/profile/old')
 @login_required
 def show_affirmations():
     affirmations = current_user.affirmations
-    affirmation1 = random.choice(affirmations)
-    affirmation2 = random.choice(affirmations)
-    affirmation3 = random.choice(affirmations)
+    if (affirmations):
+        affirmation1 = random.choice(affirmations)
+        affirmation2 = random.choice(affirmations)
+        affirmation3 = random.choice(affirmations)
+    else:
+        affirmation1 = "Wake up early"
+        affirmation2 = "Drink 2L of water"
+        affirmation3 = "Don't procrastinate"
+    
     return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
+@app.route('/add_affirmations', methods=['POST'])
+@login_required
+def add_affirmations():
+    if request.method == 'POST':
+        for key, value in request.form.items():
+            if key.startswith('affirmation') and value.strip():
+                affirmation = Affirmation(text=value.strip(), accountid=current_user.id)
+                db.session.add(affirmation)
+        db.session.commit()
+    return redirect(url_for('profile'))
+
+@app.route('/profile')
+@login_required
+def profile():
+    all_journals = current_user.journals
+    return render_template('profile.html', journals=all_journals)
+    
 @app.route('/journal/<string:journal_id>')
 @login_required
 def view_journal(journal_id):
