@@ -36,12 +36,12 @@ if __name__ == '__main__':
 @app.route('/')
 @login_required
 def dashboard():
-    journals = current_user.journals
+    all_journals = current_user.journals
     affirmations = current_user.affirmations
     affirmation1 = random.choice(affirmations)
     affirmation2 = random.choice(affirmations)
     affirmation3 = random.choice(affirmations)
-    return render_template("dashboard.html", journals=journals,affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
+    return render_template("dashboard.html", journals=all_journals, affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -200,7 +200,8 @@ def show_affirmations():
 @login_required
 def view_journal(journal_id):
     journal = Journal.query.get_or_404(journal_id)
-    return render_template('view_journal.html', journal=journal)
+    all_journals = current_user.journals
+    return render_template('view_journal.html', journal=journal, journals=all_journals)
 
 with app.app_context():
     db.create_all()

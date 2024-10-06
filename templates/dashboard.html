@@ -16,7 +16,7 @@
     {% if journals %}
     {% for journal in journals %}
     <div class="reminder-date">
-      From:  <a href="{{ url_for('view_journal', journal_id=journal.id) }}">{{ journal.date }}</a>
+      <a href="{{ url_for('view_journal', journal_id=journal.id) }}">From: {{ journal.date }}</a>
     </div>
     {% endfor %}
   {% endif %}

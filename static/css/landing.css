@@ -1,9 +1,5 @@
-main {
-  padding: 0;
-}
-
 .reminders-text, .your-best-self-text {
-  margin: 1.5rem;
+  margin-block: 1.5rem;
   font-weight: bold;
   font-size: 2rem;
   color: #272727;
@@ -22,16 +18,23 @@ main {
   justify-content: center;
   background-color: #f6b544;
   height: 25%;
-  width: 100%;
+  width: calc(100% + 4rem);
+  margin-left: -2rem;
+  margin-right: -2rem;
+  margin-top: -2rem;
+  padding-top: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .reminder-dates {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   width: 100%;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
+  margin-inline: 1rem;
 }
 
 .reminder-date {
@@ -39,18 +42,17 @@ main {
   align-items: center;
   justify-content: center;
   background-color: #ffedc1;
-  color: #212121;
   height: 4rem;
   width: 20%;
-  margin-inline: 1rem;
-  font-size: 0.8rem;
+  margin-inline-end: 1.5rem;
+  font-size: 0.9rem;
   border-radius: 8px;
-  color: #100A92;
+  font-weight: bold;
 }
 
 .reminder-date a {
   text-decoration: none;
-  color: #100A92;
+  color: #1f1f1f;
 }
 
 .bestself {
