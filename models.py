@@ -13,6 +13,8 @@ class Journal(db.Model):
     future = db.Column(db.String(5000))
     comment = db.Column(db.String(1000))
     account_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    startDate = db.Column(db.Date())
+    endDate = db.Column(db.Date())
 
     user = db.relationship('User', back_populates='journals')
 

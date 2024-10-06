@@ -1,68 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Journal{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-  <div id="leftbar">
-    <div id="account-section">
-      <p>Account</p>
-    </div>
-    <div id="dates-section">
-      <h1>Journal Dates</h1>
-      {% if journals %}
-        <ul id="journal-dates">
-          {% for journal in journals %}
-            <li>{{ journal.date }}</li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No journals found</p>
-      {% endif %}
-    </div>
-  </div>
+{% extends "base.html" %}
 
-  <main>
-    <div class="header">
-      <h1 class="journal-title">Journal</h1>
-      <a href="{{ url_for('logout') }}" class="logout-link"><button>Logout</button></a>
-    </div>
-    <div class="write-area">
-      <form id="journal-form">
-        <label for="content">Content Goes Here</label> <br>
-        <input type="text" id="content" name="content"> <br>
-        <label for="future">Future Goals Go Here</label> <br>
-        <input type="text" id="future" name="future"> <br>
-        <input type="submit" value="Save">
-      </form>
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Journal{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
 
-      <script>
-        $(document).ready(function() {
-            $('#journal-form').on('submit', function(event) {
-                event.preventDefault(); // Prevent default form submission
+{% block content %}
+<div class="header">
+  <h1 class="journal-title">Journal</h1>
+  <a href="{{ url_for('logout') }}" class="logout-link"><button>Logout</button></a>
+</div>
+<div class="write-area">
+  <form id="journal-form">
+    <label for="content">Content Goes Here</label> <br>
+    <input type="text" id="content" name="content"> <br>
+    <label for="future">Future Goals Go Here</label> <br>
+    <input type="text" id="future" name="future"> <br>
+    <input type="submit" value="Save">
+  </form>
 
-                // Serialize form data
-                var formData = $(this).serialize();
+  <script>
+    $(document).ready(function() {
+        $('#journal-form').on('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-                $.ajax({
-                    url: '/journals/new',  // URL to send the request to
-                    type: 'POST',              // HTTP method
-                    data: formData,            // Data to send
-                    success: function(response) {
-                        $('#journal-form')[0].reset();
-                    },
-                    error: function(error) {
-                        alert('Error: ' + error.responseText);  // Handle error response
-                    }
-                });
+            // Serialize form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: '/journals/new',  // URL to send the request to
+                type: 'POST',              // HTTP method
+                data: formData,            // Data to send
+                success: function(response) {
+                    $('#journal-form')[0].reset();
+                },
+                error: function(error) {
+                    alert('Error: ' + error.responseText);  // Handle error response
+                }
             });
         });
-      </script>
-    </div>
-  </main>
-</body>
-</html>
+    });
+  </script>
+</div>
+{% endblock %}

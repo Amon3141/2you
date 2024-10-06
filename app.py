@@ -4,7 +4,7 @@ from flask_login import LoginManager, login_user, current_user, logout_user, log
 from forms import RegistrationForm, LoginForm 
 from models import User, Journal 
 from extensions import db
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -30,6 +30,11 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+@app.route('/dashboard')
+def dashboard():
+    journals = current_user.journals
+    return render_template("landing.html", journals=journals)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -99,30 +104,36 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
-@app.route('/journals/new', methods=['POST'])
-# @login_required
+@app.route('/journals/new', methods=['GET', 'POST'])
+@login_required
 def new_journal():
     if request.method == 'POST':
         id = str(uuid.uuid4().hex)
-        now = datetime.utcnow()
+        today = datetime.today().date()
         content = str(request.form['content'])
         future = str(request.form['future'])
+        startDateDelta = int(request.form['startDate'])
+        endDateDelta = startDateDelta + 7
+        startDate = today + timedelta(days=startDateDelta)
+        endDate = today + timedelta(days=endDateDelta)
 
-        new_journal = Journal(id=id, 
-        date=now, 
-        content=content, 
-        future=future, 
-        comment="", 
-        account_id=current_user.id)
+        new_journal = Journal(
+            id=id, 
+            date=today,
+            content=content, 
+            future=future, 
+            comment="", 
+            account_id=current_user.id,
+            startDate=startDate,
+            endDate=endDate,
+        )
 
-        print("created")
+        # print(type(id), type(date), type(content), type(future), type(current_user.id))
         
         db.session.add(new_journal)
         db.session.commit()
-        print("saved")
-        # return redirect(url_for('view_journals'))
-    # return render_template('main.html')
-    return jsonify({"message": "form submitted successfully"})
+        return redirect(url_for('dashboard'))
+    return render_template('new_journal.html')
 
 @app.route('/abc')
 @login_required

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+  <div id="leftbar">
+    <div id="account-section">
+      <p>Account</p>
+    </div>
+    <div id="dates-section">
+      <h1>Journal Dates</h1>
+      {% if journals %}
+        <ul id="journal-dates">
+          {% for journal in journals %}
+            <li>{{ journal.date }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No journals found</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>
