@@ -1,15 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, current_user, logout_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
-from forms import RegistrationForm, LoginForm  
+from forms import RegistrationForm, LoginForm 
+from models import User, Journal 
+from extensions import db
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
-db = SQLAlchemy(app)
+db.init_app(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -22,28 +22,6 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-# creates the journal object
-# journal has a date, content, future, and comment
-class Journal(db.Model):
-    date = db.Column(db.Date(), primary_key=True)
-    content = db.Column(db.Text())
-    future = db.Column(db.Text())
-    comment = db.Column(db.Text(), nullable=True)
-
-class User(UserMixin, db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
 
 @login_manager.user_loader
 def load_user(user_id):
