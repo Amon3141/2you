@@ -34,7 +34,11 @@ if __name__ == '__main__':
 @app.route('/dashboard')
 def dashboard():
     journals = current_user.journals
-    return render_template("dashboard.html", journals=journals)
+    affirmations = current_user.affirmations
+    affirmation1 = random.choice(affirmations)
+    affirmation2 = random.choice(affirmations)
+    affirmation3 = random.choice(affirmations)
+    return render_template("dashboard.html", journals=journals,affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -141,7 +145,6 @@ def show_journal():
     journals = current_user.journals
     return render_template('journals.html', journals=journals)
 
-<<<<<<< HEAD
 # @app.route('/profile')
 # @login_required
 # def edit_profile(methods=['POST']):
@@ -173,7 +176,7 @@ def add_affirmation():
 
     return redirect(url_for('home'))
 
-@app.route('/profile/creater')
+@app.route('/profile/creator')
 @login_required
 def show_profile_creater():
     return render_template('affirmation.html')
@@ -185,10 +188,8 @@ def show_affirmations():
     affirmation1 = random.choice(affirmations)
     affirmation2 = random.choice(affirmations)
     affirmation3 = random.choice(affirmations)
-    return render_template('landing.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
+    return render_template('dashboard.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
-=======
->>>>>>> 3200028 (created a view_journal page (skelton))
 @app.route('/journal/<string:journal_id>')
 @login_required
 def view_journal(journal_id):
