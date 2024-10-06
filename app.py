@@ -25,7 +25,7 @@ login_manager.login_view = 'login'
 def home():
     if current_user.is_authenticated:
         journals = current_user.journals
-        return render_template('main.html', journals=journals)
+        return render_template('entry.html', journals=journals)
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 @app.route('/dashboard')
 def dashboard():
     journals = current_user.journals
-    return render_template("landing.html", journals=journals)
+    return render_template("dashboard.html", journals=journals)
 
 @login_manager.user_loader
 def load_user(user_id):

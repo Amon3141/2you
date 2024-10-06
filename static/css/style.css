@@ -9,79 +9,202 @@ html, body {
 }
 
 body {
-  background-color: #333;
+  background-color: #8C785E;
   display: flex;
   flex-direction: row;
+  gap: 0;
+  width: 100%;
 }
 
 body, h1, h2, h3, p, button {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
-div#leftbar {
-  width: 20%;
-  background-color: #4a4a4a;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-#account-section, #dates-section {
-  height: 100%;
+#leftbar {
+  width: 30%;
+  background-color: #4E3914;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  padding-block: 1rem;
 }
 
-#account-section p, #dates-section p {
-  text-align: center;
-  color: var(--primarycolor);
-}
+        .sidebar-button {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            color: #fff; /* Text color */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 0 2rem 2rem 0;
+            width: 93%;
+            font-size: x-large;
+            width: 70%;
+            margin-left: -2.5rem;
+            padding-left: 2.5rem;
+        }
+
+        .sidebar-button:hover {
+            background-color: #A6935B; 
+        }
+
+        .new-entry-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 80%;
+        }
+
+        .new-entry {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            color: #fff; /* Text color */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 12px;
+            width: 120%;
+            font-size: 1rem;
+            background-color: #A6935B;
+            text-align: center;
+            justify-content: center;
+            margin-left: -1rem;
+            height: 2rem;
+        }
+
+        .new_entry .leftbar_icon {
+          margin-right: 4rem;
+        }
+
+        .new-entry:hover {
+            background-color: #a0721c; 
+        }
+
+        .icon {
+            margin-right: 10px; /* Space between icon and text */
+        }
+
+        .entries-title {
+            display: flex;
+            font-size: xx-large;
+            margin-top: 30px;
+            color: white;
+            justify-self: flex-start;
+            margin-bottom: 2rem;
+            width: 80%;
+        }
+
+        .past-entry {
+            display: flex;
+            align-items: flex-start;
+            align-items: center;
+            color: #fff; /* Text color */
+            border-radius: 20px;
+            font-size: large;
+            margin-block: 1rem;
+        }
+
+        .logofield {
+            bottom: 0;
+            left: 0;
+            size: 30%;
+            
+        }
+
+        .logo {
+            position: absolute;
+            bottom: 0;
+            left: 1%;
+            width: 18%;
+            padding: 2px;
+
+        }
+
+        #account-section, #dates-section {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        }
+
+        #account-section p, #dates-section p {
+        text-align: center;
+        color: var(--primarycolor);
+        }
+
+        .sidebar-button, .new_entry, .past-entry {
+          gap: 1rem;
+        }
+
+        .entry-list {
+          margin-inline-end: 2rem;
+        }
 
 main {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: rgb(76, 76, 76);
+  width:80%;
+  padding: 40px;
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  background-color:#372B07;
 }
 
-.header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-block-end: 1.5rem;
-}
+        h1.journal-title {
+        margin: 0;
+        margin-block-end: 1.5rem;
+        font-size: 3rem;
+        color: var(--primarycolor);
+        }
 
-a.logout-link {
-  text-align: center;
-}
+        .write-area-reflection {
+        width: 100%;
+        height: 45%;
+        flex-grow: 1;
+        background-color: transparent;
+        color: var(--primarycolor);
+        box-sizing: border-box;
+        border: 2px transparent;
+        border-radius: 5px;
+        padding: 1rem;
+        outline: none;
+        }
 
-h1.journal-title {
-  margin: 0;
-  margin-block-end: 1.5rem;
-  font-size: 2rem;
-  color: var(--primarycolor);
-}
+        .write-area-action {
+            width: 100%;
+            height: 25%;
+            flex-grow: 1;
+            background-color: transparent;
+            color: var(--primarycolor);
+            box-sizing: border-box;
+            border: 2px transparent;
+            border-radius: 5px;
+            padding: 1rem;
+            outline: none;
+        }
 
-.write-area {
-  width: 100%;
-  height: 95%;
-  flex-grow: 1;
-  background-color: #3c3c3c;
-  color: var(--primarycolor);
-  box-sizing: border-box;
-  border: 1px solid #828282;
-  border-radius: 5px;
-  padding: 1rem;
-  outline: none;
-}
+        .texteditor {
+        width: 100%;
+        height: 90%;
+        outline: none;
+        background-color: transparent;
+        border: 0;
+        font-size: large;
+        color: #F4D8AF;
+        font-family: 'Times New Roman', Times, serif;
+        }
 
-.texteditor {
-  min-width: 100%;
-  outline: none;
-}
+        .texteditor::placeholder {
+            font-family:'Inter', sans-serif;
+            color: #F4D8AF;
+        }
+
+        .entrytypetitle {
+            background-color: transparent;
+            color: var(--primarycolor);
+            font-size:xx-large;
+            font-weight:bold;
+        }
+
+
+

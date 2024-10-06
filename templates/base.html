@@ -5,23 +5,44 @@
   {% endblock %}
 </head>
 <body>
-  <div id="leftbar">
-    <div id="account-section">
-      <p>Account</p>
+    <div id="leftbar">
+
+        <div class="sidebar-button" id="Profile">
+            <img src="./static/images/account_icon.png" alt="account" id="account" class="leftbar_icon">
+            <span class="sidebar-text">Profile</span> 
+        </div>
+
+        <div class="sidebar-button" id="Dashboard">
+            <img src="./static/images/dashboard_icon.png" alt="dashboard" id="dashboard" class="leftbar_icon">
+            <span class="sidebar-text">Dashboard</span>
+        </div>
+
+        <div class="entries-title" id="EntriesTitle">
+            <span class="sidebar-text">Entries</span> 
+        </div>
+
+        <div class="entry-list">
+            <div class="new-entry" id="+Entry">
+                <span class="sidebar-text">New Entry</span> 
+            </div>
+    
+            {% if journals %}
+                {% for journal in journals %}
+                    <div class="past-entry" id="Entry">
+                        <img src="./static/images/entry_icon.png" alt="entry" id="entry" class="leftbar_icon">
+                        <span class="sidebar-text">{{ journal.date }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No journals found</p>
+            {% endif %}
+        </div>
+
+        <div class="logofield">
+            <img class="logo" src="static/images/logo_simpleoutline.png">
+        </div>
+
     </div>
-    <div id="dates-section">
-      <h1>Journal Dates</h1>
-      {% if journals %}
-        <ul id="journal-dates">
-          {% for journal in journals %}
-            <li>{{ journal.date }}</li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No journals found</p>
-      {% endif %}
-    </div>
-  </div>
 
   <main>
     {% block content %}
