@@ -2,6 +2,10 @@
   --primarycolor: #dcdcdc;
 }
 
+main {
+  padding: 2rem;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -116,19 +120,16 @@ body, h1, h2, h3, p, button {
         }
 
         .logofield {
-            bottom: 0;
-            left: 0;
-            size: 30%;
-            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;
+            margin-bottom: 0.5rem;
         }
 
         .logo {
-            position: absolute;
-            bottom: 0;
-            left: 1%;
-            width: 18%;
-            padding: 2px;
-
+          width: 80%;
+          margin-inline-end: 0.5rem;
         }
 
         #date-header {
@@ -158,7 +159,6 @@ body, h1, h2, h3, p, button {
 
 main {
   width:80%;
-  padding: 40px;
   margin: 0;
   display: flex;
   flex-direction: column;

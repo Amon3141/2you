@@ -6,16 +6,23 @@
 </head>
 <body>
     <div id="leftbar">
+        <div class="sidebar-button" id="Profile">
+            <a href="{{ url_for('dashboard') }}">
+                <div class="sidebar-button-inner">
+                    <img src="{{ url_for('static', filename='images/account_icon.png') }}" alt="account" id="account" class="leftbar_icon">
+                    <span class="sidebar-text">Profile</span> 
+                </div>
+            </a>
+        </div>
 
-        <div class="sidebar-button" id="Profile"><a href="{{ url_for('dashboard') }}"><div class="sidebar-button-inner">
-            <img src="./static/images/account_icon.png" alt="account" id="account" class="leftbar_icon">
-            <span class="sidebar-text">Profile</span> 
-        </div></a></div>
-
-        <div class="sidebar-button" id="Dashboard"><a href="{{ url_for('dashboard') }}"><div class="sidebar-button-inner">
-            <img src="./static/images/dashboard_icon.png" alt="dashboard" id="dashboard" class="leftbar_icon">
-            <span class="sidebar-text">Dashboard</span>
-        </div></a></div>
+        <div class="sidebar-button" id="Dashboard">
+            <a href="{{ url_for('dashboard') }}">
+                <div class="sidebar-button-inner">
+                    <img src="{{ url_for('static', filename='images/dashboard_icon.png') }}" alt="dashboard" id="dashboard" class="leftbar_icon">
+                    <span class="sidebar-text">Dashboard</span>
+                </div>
+            </a>
+        </div>
 
         <div class="entries-title" id="EntriesTitle">
             <span class="sidebar-text">Entries</span> 
@@ -28,10 +35,12 @@
     
             {% if journals %}
                 {% for journal in journals %}
-                    <a href="{{ url_for('view_journal', journal_id=journal.id) }}"><div class="past-entry" id="Entry">
-                        <img src="./static/images/entry_icon.png" alt="entry" id="entry" class="leftbar_icon">
-                        <span class="sidebar-text">{{ journal.date }}</span>
-                    </div></a>
+                    <a href="{{ url_for('view_journal', journal_id=journal.id) }}">
+                        <div class="past-entry" id="Entry">
+                            <img src="{{ url_for('static', filename='images/entry_icon.png') }}" alt="entry" id="entry" class="leftbar_icon">
+                            <span class="sidebar-text">{{ journal.date }}</span>
+                        </div>
+                    </a>
                 {% endfor %}
             {% else %}
                 <p>No journals found</p>
@@ -39,14 +48,13 @@
         </div>
 
         <div class="logofield">
-            <img class="logo" src="static/images/logo_simpleoutline.png">
+            <img class="logo" src="{{ url_for('static', filename='images/logo_simpleoutline.png') }}">
         </div>
-
     </div>
 
-  <main>
-    {% block content %}
-    {% endblock %}
-  </main>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 </body>
 </html>
