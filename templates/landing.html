@@ -21,7 +21,22 @@
     {% endif %}
   </div>
   <div class="bestself">
-    Best Self Here
+    <div class="left">
+      <p>
+        {{ affirmation1.text }}
+      </p>
+    </div>
+    <div class="middle">
+      <p id="af1">empty text</p>
+    </div>
+    <div class="right">
+      <p id="af2">
+        {{ affirmation2.text }}
+      </p>
+      <p id="af3">
+        {{ affirmation3.text }}
+      </p>
+    </div>    
   </div>
 </div>
 {% endblock %}

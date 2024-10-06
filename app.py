@@ -2,10 +2,10 @@ from sqlite3 import IntegrityError
 from flask import Flask, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from forms import RegistrationForm, LoginForm 
-from models import User, Journal 
+from models import User, Journal, Affirmation
 from extensions import db
 from datetime import datetime, timedelta
-import uuid
+import uuid, random
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -140,6 +140,51 @@ def new_journal():
 def show_journal():
     journals = current_user.journals
     return render_template('journals.html', journals=journals)
+
+# @app.route('/profile')
+# @login_required
+# def edit_profile(methods=['POST']):
+#     if request.method == 'POST':
+#         text = str(request.form['content'])
+#         new_affirmation = Affirmation(text=text,accountid=accountid)
+#         db.session.add(new_affirmation)
+#         db.session.commit()
+#         # return redirect(url_for('dashboard'))
+#         return jsonify({"message": "success"})
+
+#     return render_template('affirmation.html')
+
+@app.route('/add_affirmation', methods=['POST'])
+@login_required
+def add_affirmation():
+    text = request.form.get('content')
+
+    if text:
+        new_affirmation = Affirmation(
+            text=text, 
+            accountid=current_user.id)
+
+        db.session.add(new_affirmation)
+        db.session.commit()
+        flash('Affirmation added successfully!', 'success')
+    else:
+        flash('Affirmation content cannot be empty.', 'danger')
+
+    return redirect(url_for('home'))
+
+@app.route('/profile/creater')
+@login_required
+def show_profile_creater():
+    return render_template('affirmation.html')
+
+@app.route('/profile')
+@login_required
+def show_affirmations():
+    affirmations = current_user.affirmations
+    affirmation1 = random.choice(affirmations)
+    affirmation2 = random.choice(affirmations)
+    affirmation3 = random.choice(affirmations)
+    return render_template('landing.html', affirmation1=affirmation1, affirmation2=affirmation2, affirmation3=affirmation3)
 
 with app.app_context():
     db.create_all()

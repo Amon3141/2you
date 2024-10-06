@@ -26,9 +26,18 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     journals = db.relationship('Journal', back_populates='user', lazy=True)
+    affirmations = db.relationship('Affirmation', back_populates='user', lazy=True)
     
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+class Affirmation(db.Model):
+        __tablename__ = 'affirmations'
+
+        text = db.Column(db.String(100), primary_key=True)
+        accountid = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+        user = db.relationship('User', back_populates='affirmations')
