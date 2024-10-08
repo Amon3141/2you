@@ -1,3 +1,3 @@
-# HelloHacks2024
+# 2you
 
 A project for HelloHacks 2024.
